@@ -99,7 +99,7 @@ NotificationSchema.statics = {
    * @param {ObjectId} userId - User id
    * @param {Boolean} unRead - Notification is read or not
    */
-  getListByUserId(userId, { unRead = false, limit = 10 } = {}) {
+  getListByUserId(userId, { unRead = false, limit = 10, skip = 0 } = {}) {
     if (_.isEmpty(userId)) throw new APIError("User Id missing", httpStatus.BAD_REQUEST);
 
     let readCondition;
@@ -119,6 +119,7 @@ NotificationSchema.statics = {
       ]
     })
     .sort({ "createdAt": -1 })
+    .skip(+skip)
     .limit(+limit)
     .populate({
       path: 'senderId',

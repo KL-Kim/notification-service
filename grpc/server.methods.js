@@ -4,13 +4,14 @@
 import Notification from '../models/notification.model'
 
 export const addNotification = (call, callback) => {
-  const { userId, senderId, type, event, subjectTitle, subjectContent, commentId, commentContent } = call.request;
+  const { userId, senderId, type, event, subjectUrl, subjectTitle, subjectContent, commentId, commentContent } = call.request;
 
   const notification = new Notification({
     userId,
     senderId,
     type,
     event,
+    subjectUrl,
     subjectTitle,
     subjectContent,
     commentId,

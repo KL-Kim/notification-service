@@ -17,6 +17,7 @@ class NotificationController extends BaseController {
    * Get notification list by user
    * @property {ObjectId} req.params.uid - User id
    * @property {Number} req.query.unRead - Notification is read or not
+   * @property {Number} req.query.skip - Number of skip
    * @property {Number} req.query.limit - Notification list limit
    */
   getNotifications(req, res, next) {
@@ -24,13 +25,19 @@ class NotificationController extends BaseController {
       .then(payload => {
         if (payload.uid !== req.params.uid) throw new APIError("Forbidden", httpStatus.FORBIDDEN);
 
-        return Notification.getCountByUserId(req.params.uid, req.query.unRead);
+        return Notification.getCountByUserId(req.params.uid);
       })
       .then(count => {
-        req.count = count;
+        req.totalCount = count;
+
+        return Notification.getCountByUserId(req.params.uid, true);
+      })
+      .then(count => {
+        req.unreadCount = count;
 
         return Notification.getListByUserId(req.params.uid, {
           unRead: req.query.unRead,
+          skip: req.query.skip,
           limit: req.query.limit,
         });
       })
@@ -51,7 +58,8 @@ class NotificationController extends BaseController {
       })
       .then(list => {
         return res.json({
-          totalCount: req.count,
+          totalCount: req.totalCount,
+          unreadCount: req.unreadCount,
           list: req.list,
         });
       })
@@ -61,10 +69,10 @@ class NotificationController extends BaseController {
   }
 
   /**
-   * Get new notifications count
-   *  @property {ObjectId} req.params.uid - User id
+   * Get unread notifications count
+   * @property {ObjectId} req.params.uid - User id
    */
-  getNewNotificationsCount(req, res, next) {
+  getUnreadNotificationsCount(req, res, next) {
     NotificationController.authenticate(req, res, next)
       .then(payload => {
         if (payload.uid !== req.params.uid) throw new APIError("Forbidden", httpStatus.FORBIDDEN);
@@ -102,13 +110,44 @@ class NotificationController extends BaseController {
         return Notification.getCountByUserId(req.uid);
       })
       .then(count => {
+        req.totalCount = count;
+
+        return Notification.getCountByUserId(req.uid, true);
+      })
+      .then(unreadCount => {
+        return res.json({
+          totalCount: req.count,
+          unreadCount,
+        });
+      })
+      .catch(err => {
+        return next(err);
+      });
+  }
+
+  /**
+   * Clear read notifications
+   * @property {ObjectId} req.params.uid - User id
+   */
+  clearReadNotifications(req, res, next) {
+    NotificationController.authenticate(req, res, next)
+      .then(payload => {
+        if (payload.uid !== req.params.uid) throw new APIError("Forbidden", httpStatus.FORBIDDEN);
+
+        return Notification.remove({ "$and": [{ userId: req.params.uid }, { isRead: true }] });
+      })
+      .then(result => {
+        return Notification.getCountByUserId(req.params.uid);
+      })
+      .then(count => {
         req.count = count;
 
-        return Notification.getListByUserId(req.uid);
+        return Notification.getListByUserId(req.params.uid);
       })
       .then(list => {
         return res.json({
           totalCount: req.count,
+          unreadCount: req.count,
           list: list,
         });
       })

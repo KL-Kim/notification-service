@@ -12,12 +12,13 @@ export default {
 		"params": {
 			"uid": Joi.string().hex().required(),
 			"unRead": Joi.number(),
+			"skip": Joi.number(),
 			"limit": Joi.number(),
 		}
 	},
 
-	// Get new notifications count
-	"getNewNotificationsCount": {
+	// Get unread notifications count
+	"getUnreadNotificationsCount": {
 		"params": {
 			"uid": Joi.string().hex().required(),
 		}
@@ -29,4 +30,11 @@ export default {
 			"id": Joi.string().hex().required(),
 		}
 	},
+
+	// Clear read notifications
+	"clearReadNotifications": {
+		"params": {
+			"uid": Joi.string().hex().required(),
+		}
+	}
 };

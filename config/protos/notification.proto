@@ -18,6 +18,7 @@ message message {
   string subjectContent = 6;
   string commentId = 7;
   string commentContent = 8;
+  string subjectUrl = 9;
 }
 
 message response {
