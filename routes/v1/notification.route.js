@@ -10,8 +10,8 @@ const notificationController = new NotificationController();
 /** GET /api/v1/notification/:uid - Get notifications **/
 router.get("/:uid", validate(paramValidation.getNotifications), notificationController.getNotifications);
 
-/** Get /api/v1/notification/news/:uid - Get unread notifications count **/
-router.get("/news/:uid", validate(paramValidation.getUnreadNotificationsCount), notificationController.getUnreadNotificationsCount);
+/** Get /api/v1/notification/unread/:uid - Get unread notifications count **/
+router.get("/unread/:uid", validate(paramValidation.getUnreadNotificationsCount), notificationController.getUnreadNotificationsCount);
 
 /** DELETE /api/v1/notification/:id - Delete notification **/
 router.delete("/:id", validate(paramValidation.deleteNotification), notificationController.deleteNotification);
