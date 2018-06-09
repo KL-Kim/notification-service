@@ -26,17 +26,17 @@ const NotificationSchema = new Schema({
   "event": {
     type: String,
     required: true,
-    enum: ['START_EVENT', 'UPVOTE', 'CANCEL_UPVOTE', 'DOWNVOTE', 'CANCEL_DOWNVOTE', 'FOLLOW', 'UNFOLLOW', 'OTHER']
+    enum: ['START_EVENT', 'UPVOTE', 'CANCEL_UPVOTE', 'DOWNVOTE', 'CANCEL_DOWNVOTE', 'REPLY','FOLLOW', 'UNFOLLOW', 'OTHER']
   },
   "subjectTitle": {
     type: String,
-    required: true,
   },
   "subjectContent": {
     type: String,
   },
   "subjectUrl": {
     type: String,
+    required: true,
   },
   "commentId": {
     type: Schema.Types.ObjectId,
