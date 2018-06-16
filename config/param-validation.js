@@ -1,8 +1,12 @@
 /**
  * Parameters Validation Config
- * @export {Object}
+ *
  * @version 0.0.1
+ *
+ * @author KL-Kim (https://github.com/KL-Kim)
+ * @license MIT
  */
+ 
 import Joi from 'joi';
 
 export default {

@@ -1,3 +1,13 @@
+/**
+ * Notification controller
+ *
+ * @export {Class}
+ * @version 0.0.1
+ *
+ * @author KL-Kim (https://github.com/KL-Kim)
+ * @license MIT
+ */
+
 import Promise from 'bluebird';
 import _ from 'lodash';
 import httpStatus from 'http-status';
@@ -9,12 +19,11 @@ import APIError from '../helper/api-error';
 import Notification from '../models/notification.model';
 
 class NotificationController extends BaseController {
-  constructor() {
-    super();
-  }
 
   /**
    * Get notification list by user
+   * @role - *
+   * @since 0.0.1
    * @property {ObjectId} req.params.uid - User id
    * @property {Number} req.query.unRead - Notification is read or not
    * @property {Number} req.query.skip - Number of skip
@@ -70,6 +79,8 @@ class NotificationController extends BaseController {
 
   /**
    * Get unread notifications count
+   * @role - *
+   * @since 0.0.1
    * @property {ObjectId} req.params.uid - User id
    */
   getUnreadNotificationsCount(req, res, next) {
@@ -91,6 +102,8 @@ class NotificationController extends BaseController {
 
   /**
    * Delete notification
+   * @role - *
+   * @since 0.0.1
    * @property {ObjectId} req.params.id - Notification id
    */
   deleteNotification(req, res, next) {
@@ -127,6 +140,8 @@ class NotificationController extends BaseController {
 
   /**
    * Clear read notifications
+   * @role - *
+   * @since 0.0.1
    * @property {ObjectId} req.params.uid - User id
    */
   clearReadNotifications(req, res, next) {
@@ -158,6 +173,8 @@ class NotificationController extends BaseController {
 
   /**
   * Authenticate
+  * @since 0.0.1
+  * @returns {Promise<Object, APIError>}
   */
   static authenticate(req, res, next) {
     return new Promise((resolve, reject) => {

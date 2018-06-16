@@ -1,22 +1,17 @@
 /**
  * Role based Access Control Config
- * @export {AccessControl}
+ *
  * @version 0.0.1
+ *
+ * @author KL-Kim (https://github.com/KL-Kim)
+ * @license MIT
  */
 
 const grants = {
-	guest: {
-
-	},
-	manager: {
-
-	},
-	admin: {
-
-	},
-	god: {
-
-	}
+	guest: {},
+	manager: {},
+	admin: {},
+	god: {},
 };
 
 export default grants;

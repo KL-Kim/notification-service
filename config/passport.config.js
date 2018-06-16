@@ -1,7 +1,10 @@
 /**
  * Passport local & Passport jwt Config
- * @export {passport}
+ *
  * @version 0.0.1
+ *
+ * @author KL-Kim (https://github.com/KL-Kim)
+ * @license MIT
  */
 
 import passport from 'passport';
@@ -25,8 +28,10 @@ const accessTokenOptions = {
 };
 
 passport.use('access-token', new JwtStrategy(accessTokenOptions, (payload, done) => {
-	if (payload.uid && payload.role) return done(null, payload, false);
-	else return done(new APIError("Unauthorized", httpStatus.UNAUTHORIZED))
+	if (payload.uid && payload.role)
+		return done(null, payload, false);
+	else
+		return done(new APIError("Unauthorized", httpStatus.UNAUTHORIZED))
 }));
 
 export default passport;

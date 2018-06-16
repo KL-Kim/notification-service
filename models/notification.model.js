@@ -1,12 +1,21 @@
+/**
+ * Notification Model
+ *
+ * @version 0.0.1
+ *
+ * @author KL-Kim (https://github.com/KL-Kim)
+ * @license MIT
+ */
+
 import Promise from 'bluebird';
 import mongoose, { Schema } from 'mongoose';
 import httpStatus from 'http-status';
 import _ from 'lodash';
 
 import config from '../config/config';
-const userDB = mongoose.createConnection(config.userMongo.host + ':' + config.userMongo.port + '/' + config.userMongo.name);
 import APIError from '../helper/api-error';
 
+const userDB = mongoose.createConnection(config.userMongo.host + ':' + config.userMongo.port + '/' + config.userMongo.name);
 const User = userDB.model('User', {});
 
 const NotificationSchema = new Schema({
