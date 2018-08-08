@@ -90,9 +90,9 @@ class NotificationController extends BaseController {
 
         return Notification.getCountByUserId(req.params.uid, true);
       })
-      .then(count => {
-        res.json({
-          count
+      .then(unreadCount => {
+        return res.json({
+          unreadCount,
         });
       })
       .catch(err => {
@@ -120,18 +120,7 @@ class NotificationController extends BaseController {
         return notification.remove();
       })
       .then(result => {
-        return Notification.getCountByUserId(req.uid);
-      })
-      .then(count => {
-        req.totalCount = count;
-
-        return Notification.getCountByUserId(req.uid, true);
-      })
-      .then(unreadCount => {
-        return res.json({
-          totalCount: req.count,
-          unreadCount,
-        });
+        return res.status(204).send();
       })
       .catch(err => {
         return next(err);
@@ -152,19 +141,7 @@ class NotificationController extends BaseController {
         return Notification.remove({ "$and": [{ userId: req.params.uid }, { isRead: true }] });
       })
       .then(result => {
-        return Notification.getCountByUserId(req.params.uid);
-      })
-      .then(count => {
-        req.count = count;
-
-        return Notification.getListByUserId(req.params.uid);
-      })
-      .then(list => {
-        return res.json({
-          totalCount: req.count,
-          unreadCount: req.count,
-          list: list,
-        });
+        return res.status(204).send();
       })
       .catch(err => {
         return next(err);
